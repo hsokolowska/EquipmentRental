@@ -13,4 +13,5 @@ public abstract class User
         UserName = userName;
         UserSurname = userSurname;
     }
+    public abstract int GetMaxReservations();
 }

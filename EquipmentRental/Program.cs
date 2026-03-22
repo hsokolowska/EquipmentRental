@@ -8,3 +8,4 @@ Camera c1 = new Camera("Canon", 1000, 3);
 Console.WriteLine(p1.Id);
 Console.WriteLine(l1.Id);
 Console.WriteLine(c1.Id);
+Console.WriteLine(p1.IsAvailable);
