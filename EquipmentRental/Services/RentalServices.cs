@@ -1,4 +1,5 @@
-﻿using EquipmentRental.Models;
+﻿using EquipmentRental.Exceptions;
+using EquipmentRental.Models;
 namespace EquipmentRental.Services;
 
 public class RentalServices : IRentalServices
@@ -9,7 +10,7 @@ public class RentalServices : IRentalServices
     {
         if (!equipment.IsAvailable)
         {
-            Console.WriteLine("Not available, będzie excepytion");
+            throw new EquipmentNotAvailableException(equipment.Id);
         }
         
         int activeUserRentals = _rentals.Count(rental => 
@@ -17,7 +18,7 @@ public class RentalServices : IRentalServices
 
         if (activeUserRentals>= user.GetMaxReservations())
         {
-            Console.WriteLine("Already maximum reservations, będzie excepytion");
+            throw new AlreadyMaximumRentalsException(user.UserId);
         }
         
         bool rentalConflict = _rentals.Any(rental =>
@@ -25,7 +26,8 @@ public class RentalServices : IRentalServices
 
         if (rentalConflict)
         {
-            Console.WriteLine("Conflict, będzie excepytion");
+            throw new RentalConflictException(equipment.Id);
+
         }
         
         var newRental = new Rental(user,equipment, from, to);
@@ -39,7 +41,7 @@ public class RentalServices : IRentalServices
         
         if (rental is null)
         {
-            Console.WriteLine("Nie mozna usunąć wypożyczenia, bedzie exception");
+            throw new RentalNotFoundException(rental.Id);
         }
         
         rental.Cancel();
