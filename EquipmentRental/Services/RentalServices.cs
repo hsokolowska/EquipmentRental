@@ -43,6 +43,11 @@ public class RentalServices : IRentalServices
         {
             throw new RentalNotFoundException(rental.Id);
         }
+
+        if (rental.IsLate())
+        {
+            throw new RentalReturnAfterDeadlineException(rental.Id);
+        }    
         
         rental.Cancel();
     }

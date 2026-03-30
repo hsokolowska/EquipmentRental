@@ -17,7 +17,7 @@ public class Rental
         Equipment = equipment;
         From = from;
         To = to;
-        IsCancelled = false;
+        IsCancelled = false; 
     }
     
     public void Cancel()
@@ -28,5 +28,10 @@ public class Rental
     public bool Overlaps(DateTime from, DateTime to)
     {
         return !(From > to || from > To);
+    }
+    
+    public bool IsLate()
+    {
+        return DateTime.Now > To;
     }
 }
